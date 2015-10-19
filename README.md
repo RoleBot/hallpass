@@ -1,7 +1,7 @@
 # hallpass
 invitation microservice
 
-hallpass only cares about sending an invitation via email/text message, verifying it and sending back to the consuming endpoint. No database is needed because invitations are JWT tokens. It is up to the consuming app to handle duplicate accepted invitations.
+hallpass only cares about sending an invitation via email/text message, verifying it and sending back to the consuming endpoint. No database is needed because invitations are JWT tokens.
 
 hallpass depends on the <a href="https://github.com/sebringj/athu">athu microservice</a> for oauth/oauth2 profile info attached to the accepted invitation.
 
