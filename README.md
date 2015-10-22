@@ -11,9 +11,10 @@ hallpass depends on the <a href="https://github.com/sebringj/athu">athu microser
 
 JWT Token with the following data items returned:
 
-- profileId (profile id)
-- provider (provider name, i.e. google)
-- invitationId (defined by the consuming application upon invitation request)
+- iss (this should be you as the issuer)
+- provider (provider name, i.e. google of the user authenticated),
+	profileId (the unique profile identifier or user identifer of the given provider)
+- invitationId (defined by the issuer upon initial request)
 
 ## Tech Stack
 node v4.2.1
