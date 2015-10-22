@@ -15,7 +15,7 @@ app.use(session({
 app.use(express.static('public'));
 app.use(favicon(__dirname + '/../public/favicon.ico'));
 
-app.post('/invitations/send/:id', require('./invitationRequest'));
+app.post('/invitation/send', require('./invitationRequest'));
 app.get('/invitation/accept', require('./acceptInvitation'));
 
 let server = app.listen(port, function() {
