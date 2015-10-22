@@ -1,7 +1,7 @@
 # hallpass
 invitation microservice
 
-hallpass only cares about sending an invitation via a nodemailer compatible npm modules, verifying it and sending back to the consuming endpoint. No database is needed because invitations are JWT tokens.
+hallpass only cares about sending an invitation via nodemailer compatible npm modules, verifying it and sending back to the consuming endpoint. No database is needed because invitations are JWT tokens.
 
 Optionally define a handlebars compatible template for your html invitation.
 
