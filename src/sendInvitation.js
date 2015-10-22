@@ -24,17 +24,21 @@ module.exports = function(req, res) {
 	let issuerSecret = issuerConfig.secret;
 	jwt.verify(token, issuerSecret, function(err, verifiedAndDecoded) {
 		if (err) {
-			res.status(403).send(err);
+			res.status(403).json(err);
 			return;
 		}
 		let errorRedirect = _.get(verifiedAndDecoded, 'payload.errorRedirect') || issuerConfig.errorRedirect;
 		let successRedirect = _.get(verifiedAndDecoded, 'payload.successRedirect') || issuerConfig.successRedirect;
 		if (!errorRedirect || !successRedirect) {
-			res.status(400).send('missing redirects');
+			res.status(400).json({ err: {
+				name: 'MissingRedirects',
+				message: 'errorRedirect and successRedirect must be in request or configured on the server'
+			}});
 			return;
 		}
 		let signed = jwt.sign({ iss, invitationId: req.params.id, errorRedirect, successRedirect }, issuerSecret);
-		// todo: complete request
+		// todo: transports
+		res.status(200).json({ message: 'sent' });
 	});
 )
 };

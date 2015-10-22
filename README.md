@@ -12,9 +12,15 @@ hallpass depends on the <a href="https://github.com/sebringj/athu">athu microser
 JWT Token with the following data items returned:
 
 - iss (this should be you as the issuer)
-- provider (provider name, i.e. google of the user authenticated),
-	profileId (the unique profile identifier or user identifer of the given provider)
-- invitationId (defined by the issuer upon initial request)
+- invitationId (for your use to tie back to the initial invitation request)
+- successRedirect (upon invitation acceptance, user is redirect here, optional)
+- errorRedirect (upon invitation failure, user is redirect here, optional)
+
+JWT Token passed back on the redirect when invitation is accepted
+- iss (this app)
+- invitationId (the invitation id you initially sent)
+- provider (the oauth/oauth2 provider verifying the profile, i.e. google)
+- profileId (the unique profile id based on the provider verified)
 
 ## Tech Stack
 node v4.2.1
