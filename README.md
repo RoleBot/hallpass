@@ -9,7 +9,7 @@ hallpass depends on the <a href="https://github.com/sebringj/athu">athu microser
 
 ## Make Invitation
 
-- Make a POST request to http(s)://[hallpass host]/invitation/send/[invitation id]
+- Make a POST request to http(s)://[hallpass hostname]/invitation/send/[invitation id]
 - "jwt" name-value pair should be in the body of the request
 
 ### JWT payload items defined
