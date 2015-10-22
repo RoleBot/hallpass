@@ -38,7 +38,7 @@ module.exports = function(req, res) {
 		}
 		let signed = jwt.sign({ iss, invitationId: req.params.id, errorRedirect, successRedirect }, issuerSecret);
 		// todo: transports
-		res.status(200).json({ message: 'sent' });
+		res.status(200).json({ message: 'invitation sent' });
 	});
 )
 };

@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = {
+	root: 'http://localhost:3002',
+	iss: 'hallpass',
 	sessionSecret: process.env.SESSION_SECRET,
 	jwtSupportedAlgorithms: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512'],
 	// assumes nodemailer modules installed here
@@ -17,7 +19,9 @@ module.exports = {
 			secret: process.env.ISSUER_TEST_SECRET, // "iss" within the JWT token
 			successRedirect: '', // optionally can be passed within the JWT token as "successRedirect"
 			errorRedirect: '', // optional can be passed within the JTW token as "errorRedirect",
-			transports: ['nodemailer-smtp-transport']
+			transports: ['nodemailer-smtp-transport'],
+			invitationMessage: 'You have been invited into the TEST app',
+			handlebarsTemplate: 'test.htm'
 		}
 	}
 };
