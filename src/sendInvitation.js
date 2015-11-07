@@ -4,16 +4,16 @@ let jwt = require('jsonwebtoken');
 let config = require('config');
 let jwtUtils = require('./utils/jwt');
 let _ = require('lodash');
+let requiredData = ['payload.errorRedirect', 'payload.successRedirect'];
 
 module.exports = function(req, res) {
 	var token = _.get(req, 'body.jwt');
 	if (!token) {
-		console.log('no jwt token');
 		res.status(400).json({ err: 'bad request' });
 		return;
 	}
 
-	jwtUtils.verify({ token })
+	jwtUtils.verify({ token, requiredData })
 	.then(function(data) {
 
 		let issuerConfig = data.issuerConfig;

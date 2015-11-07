@@ -6,7 +6,7 @@ module.exports = {
 	root: 'http://localhost:3002',
 	iss: 'hallpass',
 	athu: {
-		url: 'http://localhost:3001/auth',
+		url: 'http://localhost:3000/auth',
 		secret: process.env.ATHU_SECRET,
 		providers: ['google']
 	},
@@ -26,8 +26,8 @@ module.exports = {
 	issuers: {
 		test: {  // looked up in JWT token as "iss"
 			secret: process.env.ISSUER_TEST_SECRET,
-			successRedirect: 'http://localhost:3000/invitation', // optionally can be passed within the JWT token as "successRedirect"
-			errorRedirect: 'http://localhost:3000/invitation?error=true', // optional can be passed within the JTW token as "errorRedirect",
+			successRedirect: 'http://localhost:3002/invitation', // optionally can be passed within the JWT token as "successRedirect"
+			errorRedirect: 'http://localhost:3002/invitation?error=true', // optional can be passed within the JTW token as "errorRedirect",
 			email: {
 				transport: 'gmail',
 				template: './templates/test/email.htm',

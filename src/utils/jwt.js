@@ -14,7 +14,7 @@ function verifyToken(options) {
 		let decoded = jwt.decode(token, { complete: true });
 		let alg = _.get(decoded, 'header.alg');
 		let iss = _.get(decoded, 'payload.iss');
-		let issuerConfig = config.issuers[iss];
+		let issuerConfig = options.issuerConfig || config.issuers[iss];
 		let issuerSecret = issuerConfig.secret;
 
 		if (!alg || !saRegEx.test(alg) || !iss || !issuerRegEx.test(iss) || !issuerConfig) {
@@ -22,15 +22,16 @@ function verifyToken(options) {
 			return;
 		}
 
-		let errorRedirect = _.get(decoded, 'payload.errorRedirect') || issuerConfig.errorRedirect;
-		let successRedirect = _.get(decoded, 'payload.successRedirect') || issuerConfig.successRedirect;
-
-		if (!errorRedirect || !successRedirect) {
-			reject({ err: {
-				name: 'MissingRedirects',
-				message: 'errorRedirect and successRedirect must be in request or configured on the server'
-			}});
-			return;
+		if (options.requiredData) {
+			for (let required of options.requiredData) {
+				if (!_.has(decoded, required)) {
+					reject({ err: {
+						name: 'missing required param',
+						message: required + ' missing in jwt'
+					}});
+					return;
+				}
+			}
 		}
 
 		jwt.verify(token, issuerSecret, function(err, verifiedAndDecoded) {
@@ -38,7 +39,7 @@ function verifyToken(options) {
 				reject({ err });
 				return;
 			}
-			resolve({ verifiedAndDecoded, issuerConfig });
+			resolve({ verifiedAndDecoded, issuerConfig, context: options.context });
 		});
 
 	});
