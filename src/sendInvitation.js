@@ -23,8 +23,8 @@ module.exports = function(req, res) {
 		let errorRedirect = verifiedAndDecoded.errorRedirect;
 		let successRedirect = verifiedAndDecoded.successRedirect;
 
-		let invitation = verifiedAndDecoded.invitation;
-		let signed = jwt.sign({ iss, invitation, errorRedirect, successRedirect }, issuerSecret);
+		let invitationId = verifiedAndDecoded.invitationId;
+		let signed = jwt.sign({ iss, invitationId, errorRedirect, successRedirect }, issuerSecret);
 
 		if (issuerConfig.email) {
 			let email = verifiedAndDecoded.email;
@@ -45,7 +45,7 @@ module.exports = function(req, res) {
 		res.status(200).json({ message: 'sent', invitation });
 	})
 	.catch(function(err) {
-		console.log(err);
+		console.error(err);
 		res.status(400).json(err);
 		return;
 	});

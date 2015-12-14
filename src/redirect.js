@@ -20,7 +20,7 @@ module.exports = function(req, res) {
 	.then(function(data) {
 		return jwtUtils.verify({
 			token: returnToken,
-			requiredData: ['payload.invitation'],
+			requiredData: ['payload.invitationId'],
 			context: data.verifiedAndDecoded
 		})
 	})
@@ -30,7 +30,7 @@ module.exports = function(req, res) {
 
 		let signed = jwt.sign({
 			iss: config.iss,
-			invitation: data.verifiedAndDecoded.invitation,
+			invitationId: data.verifiedAndDecoded.invitationId,
 			profileId: data.context.id,
 			provider: data.context.provider
 		}, issuerConfig.secret);
@@ -43,13 +43,9 @@ module.exports = function(req, res) {
 		delete parsedUrl.search;
 		parsedUrl.query = parsedUrl.query || {};
 		parsedUrl.query.jwt = signed;
-
-		console.log(url.format(parsedUrl));
-		res.send('ok');
-		//res.redirect(url.format(parsedUrl));
+		res.redirect(url.format(parsedUrl));
 	})
 	.catch(function(err) {
-		console.log(err);
 		res.status(400).json(err);
 	});
 };
