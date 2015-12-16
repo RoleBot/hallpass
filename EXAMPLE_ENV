@@ -1,0 +1,30 @@
+export PORT=80
+# if SSL_PORT set will start HTTPS server from node and override PORT
+# export SSL_PORT=443
+export WEBSITE_ROOT='https://hallpass.yourwebsite.com'
+export GMAIL_USER='noreply@yourwebsite.com'
+export GMAIL_PASS='your_gmail_password'
+export ATHU_SECRET='shared_secret_with_athu'
+
+# issuers
+export ISSUER_NAMES='TEST1, TEST2'
+
+# TEST1 settings
+ISSUER_TEST1_SECRET='test 1 secret'
+ISSUER_TEST1_SUCCESS_REDIRECT='http://test1-app.yourwebsite.com?invite=success'
+ISSUER_TEST1_ERROR_REDIRECT='http://test1-app.yourwebsite.com?invite=failed'
+ISSUER_TEST1_EMAIL_TRANSPORT='gmail'
+ISSUER_TEST1_EMAIL_TEMPLATE='./templates/test1-email.html'
+ISSUER_TEST1_EMAIL_FROM='\"Test1 Admin\" <noreply@yourwebsite.com>'
+ISSUER_TEST1_EMAIL_SUBJECT='Invitation to Test 1 App'
+
+# TEST2 settings
+ISSUER_TEST2_SECRET='test 2 secret'
+ISSUER_TEST2_SUCCESS_REDIRECT='http://test2-app.yourwebsite.com?invite=success'
+ISSUER_TEST2_ERROR_REDIRECT='http://test2-app.yourwebsite.com?invite=failed'
+ISSUER_TEST2_EMAIL_TRANSPORT='gmail'
+ISSUER_TEST2_EMAIL_TEMPLATE='./templates/test2-email.html'
+ISSUER_TEST2_EMAIL_FROM='\"Test2 Admin\" <noreply@yourwebsite.com>'
+ISSUER_TEST2_EMAIL_SUBJECT='Invitation to Test 2 App'
+
+npm start

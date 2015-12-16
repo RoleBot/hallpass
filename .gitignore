@@ -4,3 +4,5 @@ dist/
 *.log
 *.map
 .env
+*.deploy
+*.env-template

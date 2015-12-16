@@ -2,11 +2,36 @@
 
 let nodemailer = require('nodemailer');
 
+/*
+	View the EXAMPLE_ENV to see how to format your environment variables.
+*/
+
+let defaultTransport = 'gmail';
+let issuerNames = process.env.ISSUER_NAMES.split(',');
+let issuers = {};
+
+for(let issuer of issuerNames) {
+	let key = issuer.trim();
+	issuers[key].secret = process.env['ISSUER_' + key + '_SECRET'];
+	issuers[key].successRedirect = process.env['ISSUER_' + key + '_SUCCESS_REDIRECT'];
+	issuers[key].errorRedirect = process.env['ISSUER_' + key + '_ERROR_REDIRECT'];
+	issuers[key].email {
+		transport: process.env['ISSUER_' + key + '_EMAIL_TRANSPORT'] || defaultTransport,
+		template: process.env['ISSUER_' + key + '_EMAIL_TEMPLATE'],
+		sendParameters: {
+			from: process.env['ISSUER_' + key + '_EMAIL_FROM'],
+			subject: process.env['ISSUER_' + key + '_EMAIL_SUBJECT']
+		}
+	}
+}
+
 module.exports = {
-	root: 'http://localhost:3002',
+	port: process.env.PORT,
+	sslPort: process.env.SSL_PORT,
+	root: process.env.ROOT_URL,
 	iss: 'hallpass',
 	athu: {
-		url: 'http://localhost:3000/auth',
+		url: process.env.ATHU_URL,
 		secret: process.env.ATHU_SECRET,
 		providers: ['google']
 	},
@@ -22,20 +47,5 @@ module.exports = {
 			}
 		})
 	},
-	// note: issuers must only have a-z, A-Z, 0-9, _, or -  characters, no whitespace
-	issuers: {
-		test: {  // looked up in JWT token as "iss"
-			secret: process.env.ISSUER_TEST_SECRET,
-			successRedirect: 'http://localhost:3002/invitation', // optionally can be passed within the JWT token as "successRedirect"
-			errorRedirect: 'http://localhost:3002/invitation?error=true', // optional can be passed within the JTW token as "errorRedirect",
-			email: {
-				transport: 'gmail',
-				template: './templates/test/email.htm',
-				sendParameters: {
-					from: 'test@test.com',
-					subject: 'Invitation into Test App'
-				}
-			}
-		}
-	}
+	issuers: issuers
 };

@@ -38,7 +38,10 @@ module.exports = function(req, res) {
 			let transport = config.transports[issuerConfig.email.transport];
 			let sendOptions = _.assign(issuerConfig.email.sendParameters, { to: email });
 			let compiledTemplates = require('./compiledTemplates')[iss];
-			sendOptions.html = compiledTemplates.email({ href: config.root + '/invitation/accept?jwt=' + signed });
+			sendOptions.html = compiledTemplates.email({
+				href: config.root + '/invitation/accept?jwt=' + signed,
+				title: config.
+			});
 			transport.sendMail(sendOptions);
 		}
 

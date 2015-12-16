@@ -4,12 +4,13 @@ let config = require('config');
 let express = require('express');
 let favicon = require('serve-favicon');
 let app = express();
-let port = process.env.PORT || config.port || 3002;
 let bodyParser = require('body-parser');
 let compiledTemplates = require('./compiledTemplates');
 let handlebars = require('handlebars');
 var _ = require('lodash');
-var fs = require('fs');
+let http = require('http');
+let https = require('https');
+let fs = require('fs');
 
 // compile handlebars templates
 Object.keys(config.issuers).forEach(function(issuer) {
@@ -34,8 +35,10 @@ app.post('/invitation/send', require('./sendInvitation'));
 app.get('/invitation/redirect', require('./redirect'));
 app.get('/invitation/accept', require('./acceptInvitation'));
 
-let server = app.listen(port, function() {
-  let host = server.address().address;
-  let port = server.address().port;
-  console.log('hallpass listening at http(s)://%s:%s', host, port);
-});
+if (config.sslPort)
+  https.createServer({
+    key: fs.readFileSync(config.sslKey),
+    cert: fs.readFileSync(config.sslCert)
+  }, app).listen(config.sslPort);
+else
+  http.createServer(app).listen(config.port);
