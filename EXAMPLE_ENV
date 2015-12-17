@@ -1,6 +1,8 @@
 export PORT=80
 # if SSL_PORT set will start HTTPS server from node and override PORT
 # export SSL_PORT=443
+# export SSL_KEY='../certs/server.key'
+# export SSL_CERT='../certs/server.crt'
 export WEBSITE_ROOT='https://hallpass.yourwebsite.com'
 export GMAIL_USER='noreply@yourwebsite.com'
 export GMAIL_PASS='your_gmail_password'
